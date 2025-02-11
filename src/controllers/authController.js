@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 import * as authService from "../services/authServices.js";
 import dotenv from "dotenv";
 
@@ -22,8 +21,6 @@ export const loginUser = async (req, res) => {
         if (user.role !== 'admin') {
             return res.status(401).json({ error: "User role must be admin" });
         }        
-        // const hashedPassword = await bcrypt.hash(password, 10);
-        // const isMatch = await bcrypt.compare(hashedPassword, user.password);
 
         const isMatch = password === user.password
         if (!isMatch) {
