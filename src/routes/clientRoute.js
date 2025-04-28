@@ -17,7 +17,7 @@ router.delete("/cars/:id", verifyToken, carController.deleteCar);
 router.get("/cars/search", carController.searchCars);
 
 router.get("/reservations", reservationController.getReservations);
-router.post("/reservations", upload.single("image"), verifyToken, reservationController.createReservation);
+router.post("/reservations", upload.single("image"), reservationController.createReservation);
 router.put("/reservations/:id", verifyToken, reservationController.updateReservation);
 router.delete("/reservations/:id", verifyToken, reservationController.deleteReservation);
 router.get("/reservations/search", reservationController.searchReservations);
@@ -27,6 +27,10 @@ router.post("/users", upload.single("image"), verifyToken, userController.create
 router.put("/users/:id", verifyToken, userController.updateUsers);
 router.delete("/users/:id", verifyToken, userController.deleteUser);
 router.get("/users/search", userController.searchUsers);
+// router.post('/testimonials', userController.createTestimonials);
+router.post('/testimonials', userController.createTestimonialsUsersComments);
+router.get("/testimonials", userController.getTestimonials);
+//router.post('/testimonials/:testimonialId/comment', userController.createTestimonialsComment);
 
 router.get("/clients", clientController.getClients);
 router.post("/clients", upload.single("image"), verifyToken, clientController.createClients);
@@ -35,5 +39,7 @@ router.delete("/clients/:id", verifyToken, clientController.deleteClient);
 router.get("/clients/search", clientController.searchClients);
 
 router.post("/auth/login", authController.loginUser);
+
+
 
 export default router;

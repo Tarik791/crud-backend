@@ -1,4 +1,120 @@
 import { query } from "../db.js";
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.hostinger.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'info@thiiqqa.com',
+        pass: 'vPneQH;l7U|'
+    }
+});
+
+export const sendReservationEmail = async (reservationData) => {
+    const { person_name, person_surname, person_email, start_date, end_date, location, price, paid_amount, number_of_people } = reservationData;
+
+    const mailOptions = {
+        from: 'info@thiiqqa.com',
+        to: 'info@thiiqqa.com, radacairhad99@gmail.com', // Više adresa
+        subject: 'Potvrda Rezervacije',
+        text: `Poštovani,
+    
+        Nova rezervacija je uspješno kreirana. Detalji su u nastavku:
+        Email: ${person_email}
+        Ime: ${person_name}
+        Prezime: ${person_surname}
+        Datum početka: ${start_date}
+        Datum završetka: ${end_date}
+        Broj ljudi: ${number_of_people}
+        Ukupna cena: ${price}
+        Uplaćeni iznos: ${paid_amount}
+    
+        Hvala na izboru naših usluga.
+    
+        Srdačno,
+        Tim Thiiqqa
+        `,
+        html: `
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        color: #333;
+                        margin: 0;
+                        padding: 20px;
+                        background-color: #f4f4f9;
+                    }
+                    .email-container {
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        padding: 20px;
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                        max-width: 600px;
+                        margin: 0 auto;
+                    }
+                    h1 {
+                        color: #4CAF50;
+                        text-align: center;
+                    }
+                    p {
+                        font-size: 16px;
+                        line-height: 1.5;
+                        margin-bottom: 10px;
+                    }
+                    ul {
+                        list-style: none;
+                        padding: 0;
+                    }
+                    li {
+                        margin: 5px 0;
+                        font-size: 16px;
+                    }
+                    .footer {
+                        text-align: center;
+                        font-size: 14px;
+                        color: #777;
+                        margin-top: 20px;
+                    }
+                    .highlight {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="email-container">
+                    <h1>Potvrda Rezervacije</h1>
+                    <p>Poštovani, </p>
+                    <p>Nova rezervacija je uspešno kreirana. Detalji su u nastavku:</p>
+                    <ul>
+                        <li><span class="highlight">Datum početka:</span> ${start_date}</li>
+                        <li><span class="highlight">Datum završetka:</span> ${end_date}</li>
+                        <li><span class="highlight">Email:</span> ${person_email}</li>
+                        <li><span class="highlight">Ime:</span> ${person_name}</li>
+                        <li><span class="highlight">Prezime:</span> ${person_surname}</li>
+                        <li><span class="highlight">Broj ljudi:</span> ${number_of_people}</li>
+                        <li><span class="highlight">Ukupna cena:</span> ${price}</li>
+                    </ul>
+                    <p>Hvala na izboru naših usluga.</p>
+                    <p class="footer">Srdačno,<br>Tim Thiiqqa</p>
+                </div>
+            </body>
+        </html>
+        `
+    };
+    
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('E-mail je uspešno poslat');
+    } catch (error) {
+        console.error('Greška prilikom slanja e-maila:', error);
+        throw new Error('Greška prilikom slanja e-maila');
+    }
+};
+
 
 export const getReservations = async () => {
     const rows = await query('SELECT * FROM reservations');

@@ -3,7 +3,6 @@ import { query } from "../db.js";
 // Get all cars
 export const getCars = async () => {
     const rows = await query('SELECT * FROM cars');
-    console.log('hello')
     return rows;
 };
 
