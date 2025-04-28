@@ -8,7 +8,6 @@ const db = await mysql.createConnection({
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "password",
     database: process.env.DB_DATABASE || "client_db",
-    port: process.env.DB_PORT || 3306
 });
 
 export const query = async (sql, params) => {
