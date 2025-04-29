@@ -14,11 +14,23 @@ const port = process.env.PORT || 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const sslOptions = {
+    key: fs.readFileSync('../certs/ssl_key.pem'),        
+    cert: fs.readFileSync('../certs/ssl_cert.pem'),
+    ca: fs.readFileSync('../certs/cacert.pem'),
+  };
+
+const corsOptions = {
+    origin: ['https://thiiqqa.com', 'http://localhost:3000'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+app.use(cors(corsOptions));
 app.use(express.json())  
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', clientRoutes)
 
-app.listen(port, () => {
+https.createServer(sslOptions, app).app.listen(port, () => {
     console.log("listening on port 3001")
 })
