@@ -14,12 +14,7 @@ const port = process.env.PORT || 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const corsOptions = {
-    origin: ['https://thiiqqa.com', 'http://localhost:3000'],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-};
-app.use(cors(corsOptions));
+
 app.use(express.json())  
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
