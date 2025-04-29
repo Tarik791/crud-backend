@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const corsOptions = {
-    origin: ['https://thiiqqa.com', 'http://localhost:3000'], 
+    origin: ['https://thiiqqa.com', 'http://147.93.121.250:3001', 'http://srv806430.hstgr.cloud:3001', 'http://localhost:3000'], 
     credentials: true, 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
