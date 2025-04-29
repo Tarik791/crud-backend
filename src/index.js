@@ -15,14 +15,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const sslOptions = {
-    key: fs.readFileSync('../certs/ssl_key.pem'),        
-    cert: fs.readFileSync('../certs/ssl_cert.pem'),
-    ca: fs.readFileSync('../certs/cacert.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/live/srv806430.hstgr.cloud/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/srv806430.hstgr.cloud/fullchain.pem')
   };
 
 const corsOptions = {
     origin: ['https://thiiqqa.com', 'http://localhost:3000'],
-    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 app.use(cors(corsOptions));
