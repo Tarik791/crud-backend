@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 
 app.use(cors({
-    origin: 'https://thiiqqa.com',
+    origin: '*',
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
     allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization'],
 }));
