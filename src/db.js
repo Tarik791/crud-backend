@@ -3,12 +3,25 @@ import env from 'dotenv';
 
 env.config();
 
+// const pool = mysql.createPool({
+//     host: process.env.DB_HOST || "localhost",
+//     user: process.env.DB_USER || "root",
+//     password: process.env.DB_PASSWORD || "password",
+//     database: process.env.DB_DATABASE || "client_db",
+//     port: process.env.DB_PORT || 3306,
+//     waitForConnections: true,
+//     connectionLimit: 10,
+//     queueLimit: 0,
+//     enableKeepAlive: true,
+//     keepAliveInitialDelay: 10000
+// });
+
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASSWORD || "password",
-    database: process.env.DB_DATABASE || "client_db",
-    port: process.env.DB_PORT || 3306,
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "client_db",
+    port: 3306,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
