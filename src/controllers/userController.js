@@ -9,6 +9,7 @@ export const getUsers = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
 export const getTestimonials = async (req, res) => {
     try {
         const testimonials = await userService.getTestimonials();

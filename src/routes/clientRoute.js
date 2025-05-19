@@ -4,17 +4,32 @@ import * as clientController from "../controllers/clientController.js";
 import * as userController from "../controllers/userController.js";
 import * as reservationController from "../controllers/reservationController.js";
 import * as carController from "../controllers/carController.js";
+import * as messagesController from "../controllers/messagesController.js";
+import * as messageReadController from "../controllers/messageReadController.js";
+
 import * as authController from "../controllers/authController.js";
 import { verifyToken } from "../middlewares/authMiddleware.js";
 import upload from "../middlewares/uploadMiddleware.js"; 
 
 const router = express.Router();
 
+// Message read tracking
+router.get("/messages/read", messageReadController.getMessageRead);
+router.post("/messages/read", messageReadController.updateMessageRead);
+
+
 router.get("/cars", carController.getCars);
 router.post("/cars", upload.single("image"), verifyToken, carController.createCar);
 router.put("/cars/:id", verifyToken, carController.updateCar);
 router.delete("/cars/:id", verifyToken, carController.deleteCar);
 router.get("/cars/search", carController.searchCars);
+
+router.post("/messages", verifyToken, messagesController.createMessage);
+router.get("/messages/:id", messagesController.getMessagesByReservationId);
+router.put("/messages/:id", verifyToken, messagesController.updateMessage);
+router.delete("/messages/:id", verifyToken, messagesController.deleteMessage);
+
+
 
 router.get("/reservations", reservationController.getReservations);
 router.post("/reservations", upload.single("image"), reservationController.createReservation);
