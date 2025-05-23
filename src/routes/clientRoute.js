@@ -8,7 +8,6 @@ import * as messagesController from "../controllers/messagesController.js";
 import * as messageReadController from "../controllers/messageReadController.js";
 
 import * as authController from "../controllers/authController.js";
-import { verifyToken } from "../middlewares/authMiddleware.js";
 import upload from "../middlewares/uploadMiddleware.js"; 
 
 const router = express.Router();
