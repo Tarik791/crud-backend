@@ -28,18 +28,19 @@ router.post("/messages", verifyToken, messagesController.createMessage);
 router.get("/messages/:id", messagesController.getMessagesByReservationId);
 router.put("/messages/:id", verifyToken, messagesController.updateMessage);
 router.delete("/messages/:id", verifyToken, messagesController.deleteMessage);
-
+// clientRoute.js
+router.get("/messages/:id/paginated", messagesController.getMessagesByReservationIdPaginated);
 
 
 router.get("/reservations", reservationController.getReservations);
-router.post("/reservations", upload.single("image"), reservationController.createReservation);
+router.post("/reservations", upload.single("document"), reservationController.createReservation);
 router.put("/reservations/:id", verifyToken, reservationController.updateReservation);
 router.delete("/reservations/:id", verifyToken, reservationController.deleteReservation);
 router.get("/reservations/search", reservationController.searchReservations);
 
 router.get("/users", userController.getUsers);
 router.post("/users", upload.single("image"), verifyToken, userController.createUsers);
-router.put("/users/:id", verifyToken, userController.updateUsers);
+router.put("/users/:id", upload.single("image"), verifyToken, userController.updateUsers);
 router.delete("/users/:id", verifyToken, userController.deleteUser);
 router.get("/users/search", userController.searchUsers);
 // router.post('/testimonials', userController.createTestimonials);

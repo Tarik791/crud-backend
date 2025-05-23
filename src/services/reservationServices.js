@@ -6,29 +6,33 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: 'info@thiiqqa.com',
-        pass: 'vPneQH;l7U|'
+        user: 'info@thi-qqa.com',
+        pass: 'IrhadRadaca1!'
     }
 });
 
 export const sendReservationEmail = async (reservationData) => {
-    const { person_name, person_surname, person_email, start_date, end_date, location, price, paid_amount, number_of_people } = reservationData;
+    const { person_name, person_surname, document, start_date, end_date, price, number_of_people, car } = reservationData;
+    const imageBasePath = 'https://srv806430.hstgr.cloud/';
 
+    console.log(document)
+    
     const mailOptions = {
-        from: 'info@thiiqqa.com',
-        to: 'info@thiiqqa.com, radacairhad99@gmail.com', // Više adresa
+        from: 'info@thi-qqa.com',
+        to: 'info@thi-qqa.com, radacairhad99@gmail.com', // Više adresa
         subject: 'Potvrda Rezervacije',
         text: `Poštovani,
     
         Nova rezervacija je uspješno kreirana. Detalji su u nastavku:
-        Email: ${person_email}
+        Document: ${document}
         Ime: ${person_name}
         Prezime: ${person_surname}
         Datum početka: ${start_date}
         Datum završetka: ${end_date}
         Broj ljudi: ${number_of_people}
         Ukupna cena: ${price}
-        Uplaćeni iznos: ${paid_amount}
+        Auto: ${car}
+        Dokument: <img src=${imageBasePath}uploads/${document} alt="Profile" width="100" />
     
         Hvala na izboru naših usluga.
     
@@ -91,7 +95,7 @@ export const sendReservationEmail = async (reservationData) => {
                     <ul>
                         <li><span class="highlight">Datum početka:</span> ${start_date}</li>
                         <li><span class="highlight">Datum završetka:</span> ${end_date}</li>
-                        <li><span class="highlight">Email:</span> ${person_email}</li>
+                        Dokument: <img src=${imageBasePath}uploads/${document} alt="Profile" width="100" />
                         <li><span class="highlight">Ime:</span> ${person_name}</li>
                         <li><span class="highlight">Prezime:</span> ${person_surname}</li>
                         <li><span class="highlight">Broj ljudi:</span> ${number_of_people}</li>
@@ -122,30 +126,30 @@ export const getReservations = async () => {
 };
 
 export const createReservation = async (reservationData) => {
-    const { person_name, person_surname, person_email, person_phone, start_date, end_date, reservation_status, reservation_type, price, paid_amount, number_of_people, location, notes } = reservationData;
+    const { person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
     const result = await query(
-        `INSERT INTO reservations (person_name, person_surname, person_email, person_phone, start_date, end_date, reservation_status, reservation_type, price, paid_amount, number_of_people, location, notes)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [person_name, person_surname, person_email, person_phone, start_date, end_date, reservation_status, reservation_type, price, paid_amount, number_of_people, location, notes]
+        `INSERT INTO reservations (person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
     );
 
     console.log("Insert Result:", result);
 
-    return { id: result.insertId, person_name, person_surname, person_email, person_phone, start_date, end_date, reservation_status, reservation_type, price, paid_amount, number_of_people, location, notes };
+    return { id: result.insertId, person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car };
 };
 
 export const updateReservation = async (reservationData, reservationId) => {
     if (!reservationId) throw new Error("Reservation ID is required");
 
-    const { person_name, person_surname, person_email, person_phone, start_date, end_date, reservation_status, reservation_type, price, paid_amount, number_of_people, location, notes } = reservationData;
+    const { person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
 
-    if (!person_name || !person_surname || !person_email || !person_phone || !start_date || !end_date || !reservation_status || !reservation_type || price === undefined || paid_amount === undefined || number_of_people === undefined || !location) {
+    if (!person_name || !person_surname || !document || !person_phone || !start_date || !end_date || !reservation_status || !reservation_type || price === undefined || number_of_people === undefined) {
         throw new Error("All fields are required for updating a reservation");
     }
 
     const result = await query(
-        `UPDATE reservations SET person_name = ?, person_surname = ?, person_email = ?, person_phone = ?, start_date = ?, end_date = ?, reservation_status = ?, reservation_type = ?, price = ?, paid_amount = ?, number_of_people = ?, location = ?, notes = ? WHERE id = ?`,
-        [person_name, person_surname, person_email, person_phone, start_date, end_date, reservation_status, reservation_type, price, paid_amount, number_of_people, location, notes, reservationId]
+        `UPDATE reservations SET person_name = ?, person_surname = ?, document = ?, person_phone = ?, start_date = ?, end_date = ?, reservation_status = ?, reservation_type = ?, price = ?, number_of_people = ?, notes = ?, car = ? WHERE id = ?`,
+        [person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car, reservationId]
     );
 
     return result.affectedRows > 0;
@@ -163,7 +167,7 @@ export const deleteReservation = async (reservationId) => {
 
 export const searchReservations = async (searchTerm) => {
     const { rows } = await query(
-        `SELECT * FROM reservations WHERE id LIKE ? OR person_name LIKE ? OR person_surname LIKE ? OR person_email LIKE ? OR location LIKE ?`,
+        `SELECT * FROM reservations WHERE id LIKE ? OR person_name LIKE ? OR person_surname LIKE ? OR document LIKE ?`,
         [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`]
     );
 

@@ -18,7 +18,7 @@ export const loginUser = async (req, res) => {
             return res.status(401).json({ error: "Invalid username or password" });
         }
 
-        if (user.role !== 'admin') {
+        if (user.role != 1) {
             return res.status(401).json({ error: "User role must be admin" });
         }        
 

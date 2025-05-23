@@ -15,8 +15,10 @@ export const createReservation = async (req, res) => {
     try {
         const clientData = req.body;
         if (req.file) {
-            clientData.image = req.file.filename;
+            clientData.document = req.file.filename;
         }
+        console.log(clientData)
+        
         const newClient = await reservationServices.createReservation(clientData);
         await reservationServices.sendReservationEmail(newClient);
         res.status(201).json(newClient);

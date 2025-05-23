@@ -30,7 +30,7 @@ export const updateClients = async (req, res) => {
     try {
         const clientId = req.params.id;
         const clientData = req.body;
-
+        console.log('prvi')
         const updated = await clientService.updateClients(clientData, clientId);
 
         if (!updated) {

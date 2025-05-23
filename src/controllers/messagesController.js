@@ -78,3 +78,19 @@ export const getMessagesByReservationId = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+// messagesController.js
+export const getMessagesByReservationIdPaginated = async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 20;
+        const offset = (page - 1) * limit;
+
+        const messages = await messageServices.getMessagesByReservationIdPaginated(reservationId, limit, offset);
+        res.status(200).json(messages);
+    } catch (err) {
+        console.error("Error fetching paginated messages:", err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};

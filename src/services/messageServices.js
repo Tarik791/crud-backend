@@ -82,3 +82,28 @@ export const getMessagesByReservationId = async (reservationId) => {
     const rows = await query(`SELECT * FROM messages WHERE reservation_id = ?`, [reservationId]);
     return rows;
 };
+
+// messageServices.js
+export const getMessagesByReservationIdPaginated = async (reservationId, limit = 20, offset = 0) => {
+    if (!reservationId) throw new Error("Reservation ID is required");
+
+    // Paziti da su limit i offset brojevi kako bi se spriječio SQL injection
+    const safeLimit = Number(limit);
+    const safeOffset = Number(offset);
+
+    if (isNaN(safeLimit) || isNaN(safeOffset)) {
+        throw new Error("Limit and offset must be valid numbers");
+    }
+
+    const sql = `
+        SELECT * FROM messages
+        WHERE reservation_id = ?
+        ORDER BY created_at ASC
+        LIMIT ${safeLimit}
+        OFFSET ${safeOffset}
+    `;
+
+    const rows = await query(sql, [reservationId]);
+    return rows;
+};
+
