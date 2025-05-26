@@ -6,6 +6,7 @@ import * as reservationController from "../controllers/reservationController.js"
 import * as carController from "../controllers/carController.js";
 import * as messagesController from "../controllers/messagesController.js";
 import * as messageReadController from "../controllers/messageReadController.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 import * as authController from "../controllers/authController.js";
 import upload from "../middlewares/uploadMiddleware.js"; 
@@ -18,7 +19,7 @@ router.post("/messages/read", messageReadController.updateMessageRead);
 
 
 router.get("/cars", carController.getCars);
-router.post("/cars", upload.single("image"), carController.createCar);
+router.post("/cars", upload.single("image"), verifyToken, carController.createCar);
 router.put("/cars/:id", carController.updateCar);
 router.delete("/cars/:id", carController.deleteCar);
 router.get("/cars/search", carController.searchCars);
