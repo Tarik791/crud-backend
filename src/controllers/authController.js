@@ -32,7 +32,7 @@ export const loginUser = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "local", 
-            maxAge: 3600000, 
+            maxAge: 6200000, 
         });
 
         res.json({ token, user: { id: user.id, username: user.username, role: user.role } });

@@ -9,7 +9,6 @@ import * as messageReadController from "../controllers/messageReadController.js"
 
 import * as authController from "../controllers/authController.js";
 import upload from "../middlewares/uploadMiddleware.js"; 
-import { verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -19,7 +18,7 @@ router.post("/messages/read", messageReadController.updateMessageRead);
 
 
 router.get("/cars", carController.getCars);
-router.post("/cars", verifyToken, upload.single("image"), carController.createCar);
+router.post("/cars", upload.single("image"), carController.createCar);
 router.put("/cars/:id", carController.updateCar);
 router.delete("/cars/:id", carController.deleteCar);
 router.get("/cars/search", carController.searchCars);
@@ -33,7 +32,7 @@ router.get("/messages/:id/paginated", messagesController.getMessagesByReservatio
 
 
 router.get("/reservations", reservationController.getReservations);
-router.post("/reservations", reservationController.createReservation);
+router.post("/reservations", upload.single("document"), reservationController.createReservation);
 router.put("/reservations/:id", reservationController.updateReservation);
 router.delete("/reservations/:id", reservationController.deleteReservation);
 router.get("/reservations/search", reservationController.searchReservations);

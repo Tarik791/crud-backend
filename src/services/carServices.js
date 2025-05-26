@@ -27,7 +27,8 @@ export const createCar = async (carData) => {
         color, 
         price_per_day, 
         available, 
-        image 
+        image,
+        created_at 
     };
 };
 

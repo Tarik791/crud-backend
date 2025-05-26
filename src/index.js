@@ -12,12 +12,17 @@ const port = process.env.PORT || 3001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(cors({
-    origin: 'https://thiiqqa.com', // ili '*' za sve domene
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true // ako koristiš cookies ili auth
-}));
+var allowlist = ['https://thiiqqa.com', 'https://thiiqqa.com/', 'http://localhost:3000']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
 app.use(express.json())  
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
