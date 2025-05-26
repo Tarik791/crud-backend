@@ -4,11 +4,11 @@ import env from 'dotenv';
 env.config();
 
 const pool = mysql.createPool({
-     host: process.env.DB_HOST || "localhost",
-     user: process.env.DB_USER || "root",
-     password: process.env.DB_PASSWORD || "password",
-     database: process.env.DB_DATABASE || "client_db",
-     port: process.env.DB_PORT || 3306,
+     host: "147.93.88.25",
+     user: "u504882771_thiiqqa",
+     password: "W=bh8HTPCcM8" ,
+     database: "u504882771_thiiqqa",
+     port: 3306,
 });
 
 // const pool = mysql.createPool({

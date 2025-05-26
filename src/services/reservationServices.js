@@ -131,7 +131,7 @@ export const createReservation = async (reservationData) => {
 
         console.log("Insert Result:", result);
 
-        return { id: result.insertId, ...reservationData };
+        return { id: result.insertId, person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car};
     } catch (error) {
         console.error("Greška u INSERT-u rezervacije:", error.message);
         throw new Error("Greška prilikom kreiranja rezervacije");
