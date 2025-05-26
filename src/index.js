@@ -3,6 +3,8 @@ import clientRoutes from './routes/clientRoute.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import env from "dotenv";
+import cors from 'cors';
+
 env.config(); 
 
 const app = express();
@@ -11,6 +13,11 @@ const port = process.env.PORT || 3001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 
 app.use(express.json())  
 
