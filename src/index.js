@@ -3,7 +3,7 @@ import clientRoutes from './routes/clientRoute.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import env from "dotenv";
-import cors from 'cors';
+
 var cors = require('cors')
 
 app.use(cors({
