@@ -7,9 +7,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const uploadDir = path.join(__dirname, '../uploads'); // Relativna putanja do uploads foldera
+const uploadDir = path.join(__dirname, '../uploads');
 
-// Proveravamo da li folder postoji, ako ne, kreiramo ga
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -17,14 +16,13 @@ if (!fs.existsSync(uploadDir)) {
 // Multer storage konfiguracija
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, uploadDir); // Čuva fajlove u uploads folderu
+        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}${path.extname(file.originalname)}`); // Generiše jedinstveno ime fajla
+        cb(null, `${Date.now()}${path.extname(file.originalname)}`);
     }
 });
 
-// Kreiramo multer upload middleware
 const upload = multer({ storage: storage });
 
 export default upload;

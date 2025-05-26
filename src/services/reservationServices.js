@@ -120,30 +120,30 @@ export const getReservations = async () => {
 };
 
 export const createReservation = async (reservationData) => {
-    const { person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
+    const { person_name, person_surname, image, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
     const result = await query(
-        `INSERT INTO reservations (person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
+        `INSERT INTO reservations (person_name, person_surname, image, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
+        [person_name, person_surname, image, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
     );
 
     console.log("Insert Result:", result);
 
-    return { id: result.insertId, person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car };
+    return { id: result.insertId, person_name, person_surname, image, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car };
 };
 
 export const updateReservation = async (reservationData, reservationId) => {
     if (!reservationId) throw new Error("Reservation ID is required");
 
-    const { person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
+    const { person_name, person_surname, image, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
 
-    if (!person_name || !person_surname || !document || !person_phone || !start_date || !end_date || !reservation_status || !reservation_type || price === undefined || number_of_people === undefined) {
+    if (!person_name || !person_surname || !image || !person_phone || !start_date || !end_date || !reservation_status || !reservation_type || price === undefined || number_of_people === undefined) {
         throw new Error("All fields are required for updating a reservation");
     }
 
     const result = await query(
-        `UPDATE reservations SET person_name = ?, person_surname = ?, document = ?, person_phone = ?, start_date = ?, end_date = ?, reservation_status = ?, reservation_type = ?, price = ?, number_of_people = ?, notes = ?, car = ? WHERE id = ?`,
-        [person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car, reservationId]
+        `UPDATE reservations SET person_name = ?, person_surname = ?, image = ?, person_phone = ?, start_date = ?, end_date = ?, reservation_status = ?, reservation_type = ?, price = ?, number_of_people = ?, notes = ?, car = ? WHERE id = ?`,
+        [person_name, person_surname, image, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car, reservationId]
     );
 
     return result.affectedRows > 0;
