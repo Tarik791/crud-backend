@@ -119,15 +119,32 @@ export const getReservations = async () => {
     return rows;
 };
 
+
+
 export const createReservation = async (reservationData) => {
     try {
         const { person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
 
+        const clean = (val) => val === undefined ? null : val;
+
         const result = await query(
             `INSERT INTO reservations (person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                clean(person_name),
+                clean(person_surname),
+                clean(person_phone),
+                clean(start_date),
+                clean(end_date),
+                clean(reservation_status),
+                clean(reservation_type),
+                clean(price),
+                clean(number_of_people),
+                clean(notes),
+                clean(car)
+            ]
         );
+
 
         console.log("Insert Result:", result);
 
