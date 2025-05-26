@@ -120,17 +120,24 @@ export const getReservations = async () => {
 };
 
 export const createReservation = async (reservationData) => {
-    const { person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
-    const result = await query(
-        `INSERT INTO reservations (person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
-    );
+    try {
+        const { person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
 
-    console.log("Insert Result:", result);
+        const result = await query(
+            `INSERT INTO reservations (person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
+        );
 
-    return { id: result.insertId, person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car };
+        console.log("Insert Result:", result);
+
+        return { id: result.insertId, ...reservationData };
+    } catch (error) {
+        console.error("Greška u INSERT-u rezervacije:", error.message);
+        throw new Error("Greška prilikom kreiranja rezervacije");
+    }
 };
+
 
 export const updateReservation = async (reservationData, reservationId) => {
     if (!reservationId) throw new Error("Reservation ID is required");

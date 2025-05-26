@@ -9,11 +9,6 @@ const pool = mysql.createPool({
      password: process.env.DB_PASSWORD || "password",
      database: process.env.DB_DATABASE || "client_db",
      port: process.env.DB_PORT || 3306,
-     waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 10000
 });
 
 // const pool = mysql.createPool({
