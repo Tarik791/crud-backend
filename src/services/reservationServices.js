@@ -128,9 +128,9 @@ export const getReservations = async () => {
 export const createReservation = async (reservationData) => {
     const { person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car } = reservationData;
     const result = await query(
-        `INSERT INTO reservations (person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, document, car)
+        `INSERT INTO reservations (person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [person_name, person_surname, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, document, car]
+        [person_name, person_surname, document, person_phone, start_date, end_date, reservation_status, reservation_type, price, number_of_people, notes, car]
     );
 
     console.log("Insert Result:", result);
