@@ -32,7 +32,7 @@ router.get("/messages/:id/paginated", messagesController.getMessagesByReservatio
 
 
 router.get("/reservations", reservationController.getReservations);
-router.post("/reservations", upload.single("image"), reservationController.createReservation);
+router.post("/reservations", reservationController.createReservation);
 router.put("/reservations/:id", reservationController.updateReservation);
 router.delete("/reservations/:id", reservationController.deleteReservation);
 router.get("/reservations/search", reservationController.searchReservations);
