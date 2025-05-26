@@ -12,11 +12,8 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendReservationEmail = async (reservationData) => {
-    const { person_name, person_surname, document, start_date, end_date, price, number_of_people, car } = reservationData;
-    const imageBasePath = 'https://srv806430.hstgr.cloud/';
+    const { person_name, person_surname, start_date, end_date, price, number_of_people, car } = reservationData;
 
-    console.log(document)
-    
     const mailOptions = {
         from: 'info@thi-qqa.com',
         to: 'info@thi-qqa.com, radacairhad99@gmail.com', // Više adresa
@@ -24,7 +21,6 @@ export const sendReservationEmail = async (reservationData) => {
         text: `Poštovani,
     
         Nova rezervacija je uspješno kreirana. Detalji su u nastavku:
-        Document: ${document}
         Ime: ${person_name}
         Prezime: ${person_surname}
         Datum početka: ${start_date}
@@ -32,7 +28,6 @@ export const sendReservationEmail = async (reservationData) => {
         Broj ljudi: ${number_of_people}
         Ukupna cena: ${price}
         Auto: ${car}
-        Dokument: <img src=${imageBasePath}uploads/${document} alt="Profile" width="100" />
     
         Hvala na izboru naših usluga.
     
@@ -95,7 +90,6 @@ export const sendReservationEmail = async (reservationData) => {
                     <ul>
                         <li><span class="highlight">Datum početka:</span> ${start_date}</li>
                         <li><span class="highlight">Datum završetka:</span> ${end_date}</li>
-                        Dokument: <img src=${imageBasePath}uploads/${document} alt="Profile" width="100" />
                         <li><span class="highlight">Ime:</span> ${person_name}</li>
                         <li><span class="highlight">Prezime:</span> ${person_surname}</li>
                         <li><span class="highlight">Broj ljudi:</span> ${number_of_people}</li>
@@ -167,7 +161,7 @@ export const deleteReservation = async (reservationId) => {
 
 export const searchReservations = async (searchTerm) => {
     const { rows } = await query(
-        `SELECT * FROM reservations WHERE id LIKE ? OR person_name LIKE ? OR person_surname LIKE ? OR document LIKE ?`,
+        `SELECT * FROM reservations WHERE id LIKE ? OR person_name LIKE ? OR person_surname LIKE ?`,
         [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`]
     );
 
